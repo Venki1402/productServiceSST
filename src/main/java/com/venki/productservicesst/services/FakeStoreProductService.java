@@ -1,6 +1,7 @@
 package com.venki.productservicesst.services;
 
 import com.venki.productservicesst.dtos.FakeStoreProductDto;
+import com.venki.productservicesst.exceptions.ProductNotFoundException;
 import com.venki.productservicesst.models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -12,10 +13,11 @@ import java.util.List;
 public class FakeStoreProductService implements ProductService{
     @Override
     public Product getProductById(Long id) {
+//        int x = 1/0; //testing exception
         RestTemplate restTemplate = new RestTemplate();
         FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakeStoreProductDto.class);
-        Product product = mapToProduct(fakeStoreProductDto);
-        return product;
+        if (fakeStoreProductDto == null) throw new ProductNotFoundException(id,"please pass a valid ProductID");
+        return mapToProduct(fakeStoreProductDto);
     }
 
     @Override
