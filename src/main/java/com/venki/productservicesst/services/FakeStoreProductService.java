@@ -2,6 +2,7 @@ package com.venki.productservicesst.services;
 
 import com.venki.productservicesst.dtos.FakeStoreProductDto;
 import com.venki.productservicesst.exceptions.ProductNotFoundException;
+import com.venki.productservicesst.models.Category;
 import com.venki.productservicesst.models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -39,9 +40,9 @@ public class FakeStoreProductService implements ProductService{
         product.setDescription(fakeStoreProductDto.getDescription());
         product.setPrice(fakeStoreProductDto.getPrice());
         product.setImage(fakeStoreProductDto.getImage());
-//        Category category = new Category();
+        Category category = new Category();
 //        category.setDescription(fakeStoreProductDto.getCategory().getDescription());
-//        product.setCategory(category);
+        product.setCategory(category);
         return product;
     }
 }
