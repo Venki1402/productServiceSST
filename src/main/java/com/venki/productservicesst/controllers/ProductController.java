@@ -3,13 +3,13 @@ package com.venki.productservicesst.controllers;
 import com.venki.productservicesst.dtos.ExceptionDto;
 import com.venki.productservicesst.models.Product;
 import com.venki.productservicesst.services.FakeStoreProductService;
+import com.venki.productservicesst.services.ProductService;
+import com.venki.productservicesst.services.SelfProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,9 +17,14 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
-    private FakeStoreProductService fakeStoreProductService;
-    ProductController(FakeStoreProductService fakeStoreProductService){
-        this.fakeStoreProductService = fakeStoreProductService;
+//    private FakeStoreProductService fakeStoreProductService;
+//    ProductController(FakeStoreProductService fakeStoreProductService){
+//        this.fakeStoreProductService = fakeStoreProductService;
+//    }
+
+    private ProductService productService;
+    ProductController(@Qualifier("selfProductService") ProductService productService){
+        this.productService = productService;
     }
 
     @GetMapping("/home")
@@ -29,7 +34,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable("id") Long id){
-        return fakeStoreProductService.getProductById(id);
+        return productService.getProductById(id);
     }
 
 //    @GetMapping("/{id}")
@@ -48,6 +53,10 @@ public class ProductController {
 
     @GetMapping
     public List<Product> getAllProducts(){
-        return fakeStoreProductService.getALlProducts();
+        return productService.getALlProducts();
+    }
+
+    @PostMapping public Product createProduct(@RequestBody Product product){
+        return productService.createProduct(product);
     }
 }

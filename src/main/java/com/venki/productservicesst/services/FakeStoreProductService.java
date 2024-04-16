@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("fakestoreProductService")
 public class FakeStoreProductService implements ProductService{
     @Override
     public Product getProductById(Long id) {
@@ -31,6 +31,11 @@ public class FakeStoreProductService implements ProductService{
             products.add(mapToProduct(fakeStoreProductDto));
         }
         return products;
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        return null;
     }
 
     private Product mapToProduct(FakeStoreProductDto fakeStoreProductDto){
