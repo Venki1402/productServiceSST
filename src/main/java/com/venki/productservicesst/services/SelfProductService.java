@@ -1,5 +1,6 @@
 package com.venki.productservicesst.services;
 
+import com.venki.productservicesst.exceptions.CategoryNotFoundException;
 import com.venki.productservicesst.exceptions.ProductNotFoundException;
 import com.venki.productservicesst.models.Category;
 import com.venki.productservicesst.models.Product;
@@ -42,6 +43,9 @@ public class SelfProductService implements ProductService{
         if (category.getId() == null) product.setCategory(categoryRepository.save(category));
         Product product1 = productRepository.save(product);
         Optional<Category> optionalCategory = categoryRepository.findById(category.getId());
+
+        if (optionalCategory.isEmpty()) throw new CategoryNotFoundException("Category Not found!!");
+
         product1.setCategory(optionalCategory.get());
         return product1;
     }

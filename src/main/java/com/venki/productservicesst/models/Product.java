@@ -19,6 +19,7 @@ public class Product {
     private String description;
     private Double price;
     @ManyToOne
+    @JoinColumn
     private Category category;
     private String image;
 }
